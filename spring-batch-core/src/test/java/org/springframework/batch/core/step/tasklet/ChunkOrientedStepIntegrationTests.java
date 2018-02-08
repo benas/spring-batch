@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2013 the original author or authors.
+ * Copyright 2006-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.job.JobSupport;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.FaultTolerantStepBuilder;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -49,6 +51,7 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * @author Dave Syer
+ * @author Mahmoud Ben Hassine
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -134,4 +137,35 @@ public class ChunkOrientedStepIntegrationTests {
 
 	}
 
+	@Test
+	public void faultTolerantStepShouldFailWhenCommitFails() throws Exception {
+		StepBuilder stepBuilder = new StepBuilder("step");
+		stepBuilder.repository(jobRepository);
+		stepBuilder.transactionManager(transactionManager);
+		FaultTolerantStepBuilder<String, String> faultTolerantStepBuilder = new FaultTolerantStepBuilder<>(stepBuilder);
+		faultTolerantStepBuilder.reader(getReader(new String[] { "a", "b", "c" }));
+		faultTolerantStepBuilder.writer(new ItemWriter<String>() {
+			@Override
+			public void write(List<? extends String> data) throws Exception {
+				TransactionSynchronizationManager
+						.registerSynchronization(new TransactionSynchronizationAdapter() {
+							@Override
+							public void beforeCommit(boolean readOnly) {
+								throw new RuntimeException("Simulate commit failure");
+							}
+						});
+			}
+		});
+		step = faultTolerantStepBuilder.build();
+
+		JobParameters jobParameters = new JobParameters(Collections.singletonMap("run.id",
+				new JobParameter(getClass().getName() + ".2")));
+		JobExecution jobExecution = jobRepository.createJobExecution(job.getName(), jobParameters);
+		StepExecution stepExecution = new StepExecution(step.getName(), jobExecution);
+
+		jobRepository.add(stepExecution);
+		step.execute(stepExecution);
+
+		assertEquals(BatchStatus.FAILED, stepExecution.getStatus());
+	}
 }
