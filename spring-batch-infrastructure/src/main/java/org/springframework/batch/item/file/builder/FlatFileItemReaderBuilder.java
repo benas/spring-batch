@@ -37,6 +37,7 @@ import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
+import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.batch.item.file.separator.RecordSeparatorPolicy;
 import org.springframework.batch.item.file.separator.SimpleRecordSeparatorPolicy;
 import org.springframework.batch.item.file.transform.DefaultFieldSetFactory;
@@ -488,21 +489,26 @@ public class FlatFileItemReaderBuilder<T> {
 			}
 
 			if(this.targetType != null || StringUtils.hasText(this.prototypeBeanName)) {
-				BeanWrapperFieldSetMapper<T> mapper = new BeanWrapperFieldSetMapper<>();
-				mapper.setTargetType(this.targetType);
-				mapper.setPrototypeBeanName(this.prototypeBeanName);
-				mapper.setStrict(this.beanMapperStrict);
-				mapper.setBeanFactory(this.beanFactory);
-				mapper.setDistanceLimit(this.distanceLimit);
-				mapper.setCustomEditors(this.customEditors);
-				try {
-					mapper.afterPropertiesSet();
-				}
-				catch (Exception e) {
-					throw new IllegalStateException("Unable to initialize BeanWrapperFieldSetMapper", e);
+				if (targetType.isRecord()) {
+					RecordFieldSetMapper<T> mapper = new RecordFieldSetMapper<>(targetType);
+					lineMapper.setFieldSetMapper(mapper);
+				} else {
+					BeanWrapperFieldSetMapper<T> mapper = new BeanWrapperFieldSetMapper<>();
+					mapper.setTargetType(this.targetType);
+					mapper.setPrototypeBeanName(this.prototypeBeanName);
+					mapper.setStrict(this.beanMapperStrict);
+					mapper.setBeanFactory(this.beanFactory);
+					mapper.setDistanceLimit(this.distanceLimit);
+					mapper.setCustomEditors(this.customEditors);
+					try {
+						mapper.afterPropertiesSet();
+						lineMapper.setFieldSetMapper(mapper);
+					}
+					catch (Exception e) {
+						throw new IllegalStateException("Unable to initialize BeanWrapperFieldSetMapper", e);
+					}
 				}
 
-				lineMapper.setFieldSetMapper(mapper);
 			}
 			else if(this.fieldSetMapper != null) {
 				lineMapper.setFieldSetMapper(this.fieldSetMapper);

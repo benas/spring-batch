@@ -15,6 +15,7 @@
  */
 package org.springframework.batch.item.file.builder;
 
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.FieldExtractor;
 import org.springframework.batch.item.file.transform.FormatterLineAggregator;
 import org.springframework.batch.item.file.transform.LineAggregator;
+import org.springframework.batch.item.file.transform.RecordFieldExtractor;
 import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
@@ -386,19 +388,28 @@ public class FlatFileItemWriterBuilder<T> {
 			formatterLineAggregator.setMaximumLength(this.maximumLength);
 
 			if (this.fieldExtractor == null) {
-				BeanWrapperFieldExtractor<T> beanWrapperFieldExtractor = new BeanWrapperFieldExtractor<>();
-				beanWrapperFieldExtractor.setNames(this.names.toArray(new String[this.names.size()]));
-				try {
-					beanWrapperFieldExtractor.afterPropertiesSet();
+				if (isRecord()) { // TODO should we add a field targetType or try to get the type T to check if it's a record?
+					//RecordFieldExtractor<T> recordFieldExtractor = new RecordFieldExtractor<>();
+					//this.fieldExtractor = recordFieldExtractor;
+				} else {
+					BeanWrapperFieldExtractor<T> beanWrapperFieldExtractor = new BeanWrapperFieldExtractor<>();
+					beanWrapperFieldExtractor.setNames(this.names.toArray(new String[this.names.size()]));
+					try {
+						beanWrapperFieldExtractor.afterPropertiesSet();
+					} catch (Exception e) {
+						throw new IllegalStateException("Unable to initialize FormatterLineAggregator", e);
+					}
+					this.fieldExtractor = beanWrapperFieldExtractor;
 				}
-				catch (Exception e) {
-					throw new IllegalStateException("Unable to initialize FormatterLineAggregator", e);
-				}
-				this.fieldExtractor = beanWrapperFieldExtractor;
 			}
 
 			formatterLineAggregator.setFieldExtractor(this.fieldExtractor);
 			return formatterLineAggregator;
+		}
+
+		private boolean isRecord() {
+			TypeVariable<? extends Class<? extends FormattedBuilder>> typeParameter = this.getClass().getTypeParameters()[0];
+			return typeParameter.getClass().isRecord();
 		}
 	}
 
@@ -468,6 +479,7 @@ public class FlatFileItemWriterBuilder<T> {
 			}
 
 			if (this.fieldExtractor == null) {
+				// if isRecord() .. same as formatted
 				BeanWrapperFieldExtractor<T> beanWrapperFieldExtractor = new BeanWrapperFieldExtractor<>();
 				beanWrapperFieldExtractor.setNames(this.names.toArray(new String[this.names.size()]));
 				try {

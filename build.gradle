@@ -127,14 +127,14 @@ configure(subprojects - project(":spring-build-src")) { subproject ->
 	}
 
     compileJava {
-        sourceCompatibility=1.8
-        targetCompatibility=1.8
+        sourceCompatibility=14
+        targetCompatibility=14
         options.encoding='UTF-8'
     }
 
     compileTestJava {
-        sourceCompatibility=1.8
-        targetCompatibility=1.8
+        sourceCompatibility=14
+        targetCompatibility=14
         options.encoding='UTF-8'
     }
 
