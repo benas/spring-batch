@@ -33,7 +33,7 @@ public class TradeProcessor implements ItemProcessor<Trade, Trade> {
 	private Trade failedItem = null;
 
 	/**
-	 * Public setter for the the index on which failure should occur.
+	 * Public setter for the index on which failure should occur.
 	 * 
 	 * @param failure the failure to set
 	 */

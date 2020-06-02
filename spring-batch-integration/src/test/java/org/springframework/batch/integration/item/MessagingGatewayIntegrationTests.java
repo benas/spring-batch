@@ -123,7 +123,7 @@ public class MessagingGatewayIntegrationTests {
 
 	/**
 	 * This is just used to trap the messages sent by the ItemWriter and make an
-	 * assertion about them in the the test case. In a real application this
+	 * assertion about them in the test case. In a real application this
 	 * would be the output stage and/or business processing.
 	 * 
 	 * @author Dave Syer

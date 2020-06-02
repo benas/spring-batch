@@ -48,7 +48,7 @@ public class RethrowOnThresholdExceptionHandler implements ExceptionHandler {
 	private boolean useParent = false;
 
 	/**
-	 * Flag to indicate the the exception counters should be shared between
+	 * Flag to indicate that the exception counters should be shared between
 	 * sibling contexts in a nested batch. Default is false.
 	 * 
 	 * @param useParent true if the parent context should be used to store the

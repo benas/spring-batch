@@ -46,7 +46,7 @@ public class JobParameterExecutionContextCopyListener extends StepExecutionListe
 
 	/**
 	 * Copy attributes from the {@link JobParameters} to the {@link Step}
-	 * {@link ExecutionContext}, if not already present. The the key is already
+	 * {@link ExecutionContext}, if not already present. The key is already
 	 * present we assume that a restart is in operation and the previous value
 	 * is needed. If the provided keys are empty defaults to copy all keys in
 	 * the {@link JobParameters}.

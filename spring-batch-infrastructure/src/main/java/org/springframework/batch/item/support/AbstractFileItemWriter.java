@@ -489,7 +489,7 @@ public abstract class AbstractFileItemWriter<T> extends AbstractItemStreamItemWr
 				}
 			}
 			catch (IOException ioe) {
-				throw new ItemStreamException("Unable to close the the ItemWriter", ioe);
+				throw new ItemStreamException("Unable to close the ItemWriter", ioe);
 			}
 			finally {
 				if (!transactional) {
@@ -505,7 +505,7 @@ public abstract class AbstractFileItemWriter<T> extends AbstractItemStreamItemWr
 				}
 			}
 			catch (IOException ioe) {
-				throw new ItemStreamException("Unable to close the the ItemWriter", ioe);
+				throw new ItemStreamException("Unable to close the ItemWriter", ioe);
 			}
 			finally {
 				try {
@@ -514,7 +514,7 @@ public abstract class AbstractFileItemWriter<T> extends AbstractItemStreamItemWr
 					}
 				}
 				catch (IOException ioe) {
-					throw new ItemStreamException("Unable to close the the ItemWriter", ioe);
+					throw new ItemStreamException("Unable to close the ItemWriter", ioe);
 				}
 			}
 		}

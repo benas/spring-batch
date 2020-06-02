@@ -99,7 +99,7 @@ public class TradeWriter extends ItemStreamSupport implements ItemWriter<Trade> 
 	}
 
 	/**
-	 * Public setter for the the customers on which failure should occur.
+	 * Public setter for the customers on which failure should occur.
 	 * 
 	 * @param failingCustomers The customers to fail on
 	 */

@@ -18,7 +18,7 @@ package org.springframework.batch.core;
 
 
 /**
- * Exception to indicate the the job has been interrupted. The exception state
+ * Exception to indicate that the job has been interrupted. The exception state
  * indicated is not normally recoverable by batch application clients, but
  * internally it is useful to force a check. The exception will often be wrapped
  * in a runtime exception (usually {@link UnexpectedJobExecutionException} before

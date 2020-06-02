@@ -66,7 +66,7 @@ ItemWriter<T> {
 	}
 
 	/**
-	 * @param fieldsUsedAsMethodArguments the values of the these item's fields
+	 * @param fieldsUsedAsMethodArguments the values of the item's fields
 	 * will be used as arguments for the delegate method. Nested property values
 	 * are supported, e.g. <code>address.city</code>
 	 */
