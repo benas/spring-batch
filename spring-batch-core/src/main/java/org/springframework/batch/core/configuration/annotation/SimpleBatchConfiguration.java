@@ -27,6 +27,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -87,6 +88,7 @@ public class SimpleBatchConfiguration extends AbstractBatchConfiguration {
 
 	@Override
 	@Bean
+	@Conditional(MissingTransactionManager.class)
 	public PlatformTransactionManager transactionManager() throws Exception {
 		return createLazyProxy(transactionManager, PlatformTransactionManager.class);
 	}
