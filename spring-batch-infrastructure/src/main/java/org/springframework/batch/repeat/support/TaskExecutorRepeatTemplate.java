@@ -54,6 +54,7 @@ public class TaskExecutorRepeatTemplate extends RepeatTemplate {
 	 * {@link #getNextResult(RepeatContext, RepeatCallback, RepeatInternalState)}
 	 * .
 	 */
+	@Deprecated
 	public static final int DEFAULT_THROTTLE_LIMIT = 4;
 
 	private int throttleLimit = DEFAULT_THROTTLE_LIMIT;
@@ -71,7 +72,9 @@ public class TaskExecutorRepeatTemplate extends RepeatTemplate {
 	 * pool size larger than the throttle limit if possible).
 	 * 
 	 * @param throttleLimit the throttleLimit to set.
+	 * @deprecated in favor of using similar features in {@link TaskExecutor} implementations   
 	 */
+	@Deprecated
 	public void setThrottleLimit(int throttleLimit) {
 		this.throttleLimit = throttleLimit;
 	}

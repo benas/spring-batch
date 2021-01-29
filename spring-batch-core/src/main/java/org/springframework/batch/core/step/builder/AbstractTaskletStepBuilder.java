@@ -200,7 +200,9 @@ StepBuilderHelper<AbstractTaskletStepBuilder<B>> {
 	 *
 	 * @param throttleLimit maximum number of concurrent tasklet executions allowed
 	 * @return this for fluent chaining
+	 * @deprecated in favor of using similar features in {@link TaskExecutor} implementations
 	 */
+	@Deprecated
 	public AbstractTaskletStepBuilder<B> throttleLimit(int throttleLimit) {
 		this.throttleLimit = throttleLimit;
 		return this;
@@ -273,6 +275,7 @@ StepBuilderHelper<AbstractTaskletStepBuilder<B>> {
 		return taskExecutor;
 	}
 
+	@Deprecated
 	protected int getThrottleLimit() {
 		return throttleLimit;
 	}

@@ -1063,7 +1063,9 @@ public class StepParserStepFactoryBean<I, O> implements FactoryBean<Step>, BeanN
 	 * thread pools from being overwhelmed. Defaults to {@link TaskExecutorRepeatTemplate#DEFAULT_THROTTLE_LIMIT}.
 	 *
 	 * @param throttleLimit the throttle limit to set.
+	 *  @deprecated in favor of using similar features in {@link TaskExecutor} implementations   
 	 */
+	@Deprecated
 	public void setThrottleLimit(Integer throttleLimit) {
 		this.throttleLimit = throttleLimit;
 	}
