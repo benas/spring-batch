@@ -66,7 +66,7 @@ public class ExceptionClassifierSkipPolicy implements SkipPolicy {
 	 * @throws SkipLimitExceededException if a limit is exceeded
 	 */
 	@Override
-	public boolean shouldSkip(Throwable t, int skipCount) throws SkipLimitExceededException {
+	public boolean shouldSkip(Throwable t, long skipCount) throws SkipLimitExceededException {
 		return classifier.classify(t).shouldSkip(t, skipCount);
 	}
 

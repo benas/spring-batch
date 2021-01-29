@@ -261,7 +261,7 @@ public class FaultTolerantStepFactoryBeanTests {
 
 		factory.setSkipPolicy(new SkipPolicy() {
 			@Override
-			public boolean shouldSkip(Throwable t, int skipCount) throws SkipLimitExceededException {
+			public boolean shouldSkip(Throwable t, long skipCount) throws SkipLimitExceededException {
 				throw new  RuntimeException("Planned exception in SkipPolicy");
 			}
 		});
@@ -289,7 +289,7 @@ public class FaultTolerantStepFactoryBeanTests {
 
 		factory.setSkipPolicy(new SkipPolicy() {
 			@Override
-			public boolean shouldSkip(Throwable t, int skipCount) throws SkipLimitExceededException {
+			public boolean shouldSkip(Throwable t, long skipCount) throws SkipLimitExceededException {
 				throw new  RuntimeException("Planned exception in SkipPolicy");
 			}
 		});

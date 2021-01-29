@@ -96,10 +96,10 @@ public class FootballJobSkipIntegrationTests extends AbstractIntegrationTests {
 			if (stepExecution.getStepName().equals("playerload")) {
 				// The effect of the retries is to increase the number of
 				// rollbacks
-				int commitInterval = stepExecution.getReadCount() / (stepExecution.getCommitCount() - 1);
+				long commitInterval = stepExecution.getReadCount() / (stepExecution.getCommitCount() - 1);
 				// Account for the extra empty commit if the read count is
 				// commensurate with the commit interval
-				int effectiveCommitCount = stepExecution.getReadCount() % commitInterval == 0 ? stepExecution
+				long effectiveCommitCount = stepExecution.getReadCount() % commitInterval == 0 ? stepExecution
 						.getCommitCount() - 1 : stepExecution.getCommitCount();
 				long expectedRollbacks = Math.max(1, retryLimit) * effectiveCommitCount + stepExecution.getReadCount();
 				assertEquals(expectedRollbacks, stepExecution.getRollbackCount());

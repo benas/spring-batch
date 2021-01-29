@@ -124,7 +124,7 @@ public class LimitCheckingItemSkipPolicy implements SkipPolicy {
 	 * {@link SkipLimitExceededException} will be thrown.
 	 */
 	@Override
-	public boolean shouldSkip(Throwable t, int skipCount) {
+	public boolean shouldSkip(Throwable t, long skipCount) {
 		if (skippableExceptionClassifier.classify(t)) {
 			if (skipCount < skipLimit) {
 				return true;

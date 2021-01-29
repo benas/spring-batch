@@ -280,7 +280,7 @@ public class FaultTolerantStepIntegrationTests {
 	private class SkipIllegalArgumentExceptionSkipPolicy implements SkipPolicy {
 		
 		@Override
-		public boolean shouldSkip(Throwable throwable, int skipCount)
+		public boolean shouldSkip(Throwable throwable, long skipCount)
 				throws SkipLimitExceededException {
 			return throwable instanceof IllegalArgumentException;
 		}

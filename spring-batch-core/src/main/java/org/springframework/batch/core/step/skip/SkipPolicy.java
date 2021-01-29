@@ -38,6 +38,6 @@ public interface SkipPolicy {
 	 * @throws SkipLimitExceededException if a limit is breached
 	 * @throws IllegalArgumentException if the exception is null
 	 */
-	boolean shouldSkip(Throwable t, int skipCount) throws SkipLimitExceededException;
+	boolean shouldSkip(Throwable t, long skipCount) throws SkipLimitExceededException;
 
 }

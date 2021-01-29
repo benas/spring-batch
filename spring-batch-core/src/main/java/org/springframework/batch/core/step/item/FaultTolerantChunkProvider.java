@@ -130,7 +130,7 @@ public class FaultTolerantChunkProvider<I> extends SimpleChunkProvider<I> {
 	 * @param e the cause of the skip
 	 * @param skipCount the current skip count
 	 */
-	private boolean shouldSkip(SkipPolicy policy, Throwable e, int skipCount) {
+	private boolean shouldSkip(SkipPolicy policy, Throwable e, long skipCount) {
 		try {
 			return policy.shouldSkip(e, skipCount);
 		}

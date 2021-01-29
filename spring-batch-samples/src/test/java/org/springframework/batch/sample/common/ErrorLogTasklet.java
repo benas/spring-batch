@@ -52,7 +52,8 @@ public class ErrorLogTasklet implements Tasklet, StepExecutionListener {
 	/**
 	 * @return
 	 */
-	private int getSkipCount() {
+	private long
+	getSkipCount() {
 		if (stepExecution == null || stepName == null) {
 			return 0;
 		}

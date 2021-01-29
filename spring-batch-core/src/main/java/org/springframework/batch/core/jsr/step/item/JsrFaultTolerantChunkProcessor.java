@@ -193,7 +193,7 @@ public class JsrFaultTolerantChunkProcessor<I,O> extends JsrChunkProcessor<I, O>
 	 * @param e the cause of the skip
 	 * @param skipCount the current skip count
 	 */
-	private boolean shouldSkip(SkipPolicy policy, Throwable e, int skipCount) {
+	private boolean shouldSkip(SkipPolicy policy, Throwable e, long skipCount) {
 		try {
 			return policy.shouldSkip(e, skipCount);
 		}
